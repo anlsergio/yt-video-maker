@@ -1,12 +1,22 @@
 import sys
+import json
 
-class Question:
-    def __init__(self, searchTerm, prefix):
-        self.searchTerm = searchTerm
-        self.prefix = prefix
+from robots.text import robot
+
+class Content:
+    def __init__(self):
+        self.searchTerm = ""
+        self.prefix = ""
+        self.searchContentOriginal = ""
+        self.sourceContentClean = ""
+        self.sentences = []
+
+    def __str__(self):
+        return f"{ self.searchTerm }'s content"
+
 
 def start():
-    question = Question("data", "data")
+    content = Content()
 
     def askAndReturnSearch():
         return input("Type a Wikipedia search term:")
@@ -22,9 +32,11 @@ def start():
         sys.exit(1)
 
     
-    question.searchTerm = askAndReturnSearch()
-    question.prefix = askAndReturnPrefix()
-    print(question.searchTerm)
-    print(question.prefix)
+    content.searchTerm = askAndReturnSearch()
+    content.prefix = askAndReturnPrefix()
+
+    robot(content)
+
+    print(content)
 
 start()
