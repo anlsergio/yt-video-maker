@@ -1,10 +1,12 @@
-import Algorithmia
 import json
 import re
+import settings
+
+import Algorithmia
 import nltk
 from nltk.tokenize import sent_tokenize
-
-from decouple import config
+from watson_developer_cloud import NaturalLanguageUnderstandingV1
+from watson_developer_cloud.natural_language_understanding_v1 import Features, KeywordsOptions
 
 # Uncomment the line below to download 'en' package for nltk:
 # nltk.download()
@@ -13,7 +15,7 @@ def fetch_content_from_wikipedia(content):
     # This function uses algorithmia API to fetch data from Wikipedia source based on search term and
     # stores it in source_content_original
 
-    algorithmia_authenticated = Algorithmia.client(config('ALGORITHMIA_API_KEY'))
+    algorithmia_authenticated = Algorithmia.client(settings.ALGORITHMIA_API_KEY)
     wikipedia_algorithm = algorithmia_authenticated.algo('web/WikipediaParser/0.1.2')
     try:
         print('trying....')
@@ -57,6 +59,45 @@ def break_content_in_sentences(content):
     for sentence in sent_tokenize_list:
         content.sentences.append({'text': sentence, 'keywords': [], 'images': []})
 
+def fetch_watson_and_return_keywords(sentence):
+    """ Use IBM Watson IA for applying tags
+
+        Provides IBM Watson a sentece and returns a list of tags
+    """
+    nlu = NaturalLanguageUnderstandingV1(
+        version='2018-11-16',
+        iam_apikey=settings.WATSON_API_KEY,
+        url='https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2018-11-16'
+    )
+
+    try:
+        response = nlu.analyze(
+            text = sentence,
+            features=Features(
+                keywords=KeywordsOptions(
+                    limit=5
+                )
+            )
+        ).get_result()
+
+        # It gets all texts from the response and turn each of them into an element of the keywords list
+        refined_response = response.get("keywords")
+        keywords = [x.get("text") for x in refined_response]
+
+        return keywords
+    except Exception as error:
+        print(error)
+
+
+def limit_max_sentences(content):
+    # This function slices the array of sentences to the number previously defined
+    content.sentences = content.sentences[0:content.max_sentences]
+
+
+def fetch_sentences_keywords(content):
+    for sentence in content.sentences:
+        sentence['keywords'] = fetch_watson_and_return_keywords(sentence.get('text'))
+
 def robot(content):
     """ Text Robot
         These function gives live to the text robot
@@ -65,7 +106,11 @@ def robot(content):
     fetch_content_from_wikipedia(content)
     clear_content(content)
     break_content_in_sentences(content)
+    limit_max_sentences(content)
+    fetch_sentences_keywords(content)
 
     # It prints the content object as a JSON format
-    content_json = json.dumps(content.__dict__)
+    content_json = json.dumps(content.__dict__, indent=2)
     print(content_json)
+    
+    # fetch_watson_and_return_keywords("I'm Michael Jackson and I'm a hell of a dancer specially talking about Moon Walking dance move!")
