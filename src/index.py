@@ -10,6 +10,7 @@ class Content:
         self.search_content_original = ""
         self.source_content_clean = ""
         self.sentences = []
+        self.max_sentences = 0
 
     def __str__(self):
         return f"{ self.search_term }'s content"
@@ -18,7 +19,11 @@ class Content:
 def start():
     # Function designed to orchestrate the robots calls
 
+    # New instance of content object
     content = Content()
+
+    # Maximum amount of sentences to be processed by Watson IA
+    content.max_sentences = 7
 
     def ask_and_return_search():
         # Asks for the Wikipedia search term and returns it
