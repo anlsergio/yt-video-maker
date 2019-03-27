@@ -2,6 +2,8 @@ import json
 import re
 import settings
 
+from robots.state import save, load
+
 import Algorithmia
 import nltk
 from nltk.tokenize import sent_tokenize
@@ -64,14 +66,14 @@ def fetch_watson_and_return_keywords(sentence):
 
         Provides IBM Watson a sentece and returns a list of tags
     """
-    nlu = NaturalLanguageUnderstandingV1(
+    NLU = NaturalLanguageUnderstandingV1(
         version='2018-11-16',
         iam_apikey=settings.WATSON_API_KEY,
         url='https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2018-11-16'
     )
 
     try:
-        response = nlu.analyze(
+        response = NLU.analyze(
             text = sentence,
             features=Features(
                 keywords=KeywordsOptions(
@@ -98,19 +100,22 @@ def fetch_sentences_keywords(content):
     for sentence in content.sentences:
         sentence['keywords'] = fetch_watson_and_return_keywords(sentence.get('text'))
 
-def robot(content):
+def robot():
     """ Text Robot
         These function gives live to the text robot
     """ 
-    print(f"I've received a content: { content }")
+    print("Pre loading data from JSON...")
+
+    content = load()
+
     fetch_content_from_wikipedia(content)
     clear_content(content)
     break_content_in_sentences(content)
     limit_max_sentences(content)
     fetch_sentences_keywords(content)
 
+    save(content.__dict__)
+
     # It prints the content object as a JSON format
-    content_json = json.dumps(content.__dict__, indent=2)
-    print(content_json)
-    
-    # fetch_watson_and_return_keywords("I'm Michael Jackson and I'm a hell of a dancer specially talking about Moon Walking dance move!")
+    # content_json = json.dumps(content.__dict__, indent=2)
+    # print(content_json)

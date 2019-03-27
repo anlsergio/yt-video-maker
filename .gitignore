@@ -107,3 +107,6 @@ venv.bak/
 
 # vscode
 .vscode/
+
+# Json State File
+content.json
