@@ -1,5 +1,7 @@
 # yt-video-maker
-Open source project designed to make automated videos
+Open source project designed to make automated videos.
+
+Main tasks overview: The robots define video text content which is processed by Watson AI, add video Tags based on the subject, seek and choose related images on Google Images, process chosen images, create sentences with images, create video Thumbnail, video rendering using After Effects and finally the video upload by OAauth authentication.
 
 
 # Credentials format (Python Decouple)
