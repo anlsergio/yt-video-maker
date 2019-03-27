@@ -1,7 +1,8 @@
-import sys
 import json
 
-from robots.text import robot
+from robots.state import load
+from robots.text import robot as robot_text
+from robots.input import robot as robot_input
 
 class Content:
     def __init__(self):
@@ -19,35 +20,17 @@ class Content:
 def start():
     # Function designed to orchestrate the robots calls
 
-    # New instance of content object
     content = Content()
 
-    # Maximum amount of sentences to be processed by Watson IA
-    content.max_sentences = 7
-
-    def ask_and_return_search():
-        # Asks for the Wikipedia search term and returns it
-        return input("Type a Wikipedia search term:")
-
-    def ask_and_return_prefix():
-        # Lists the search prefix pre-defined options and asks for the user to choose between them
-        prefixes = ['Who is', 'What is', 'The history of']
-        for index in range(0, 3):
-            print(f"[{ index + 1 }] - { prefixes[index] }")
-        print("[0] - exit")
-        selected_prefix_index = int(input("Choose one option:")) - 1
-        if selected_prefix_index >= 0:
-            return prefixes[selected_prefix_index]
-        sys.exit(1)
-
-    # Stores the data provided from the user
-    content.search_term = ask_and_return_search()
-    content.prefix = ask_and_return_prefix()
+    robot_input(content)
 
     # Starts the text robot passing the content object to it
-    robot(content)
+    robot_text()
 
-    # print(content)
+    # Gets the JSON content in order to show the file's content
+    content_json = load()
+    print("Loading JSON file....")
+    print(content_json)
 
 # Initialize the robots orchestrator
 start()
