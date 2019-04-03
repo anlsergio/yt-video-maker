@@ -21,3 +21,11 @@ File: `.env`
 ```
 WATSON_API_KEY=my_api_key
 ```
+
+## Google Custom Search Engine API
+
+File: `.env``
+
+```
+SEARCH_ENGINE_ID=my_api_key
+```
