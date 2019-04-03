@@ -59,7 +59,7 @@ def break_content_in_sentences(content):
     # Also it initializes the data structure of content.sentences atribute
     sent_tokenize_list = sent_tokenize(content.source_content_clean)
     for sentence in sent_tokenize_list:
-        content.sentences.append({'text': sentence, 'keywords': [], 'images': []})
+        content.sentences.append({'text': sentence, 'keywords': [], 'images': [], 'googleSearchQuery': []})
 
 def fetch_watson_and_return_keywords(sentence):
     """ Use IBM Watson IA for applying tags
