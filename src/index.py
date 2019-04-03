@@ -3,6 +3,7 @@ import json
 from robots.state import load
 from robots.text import robot as robot_text
 from robots.input import robot as robot_input
+from robots.image import robot as robot_image
 
 class Content:
     def __init__(self):
@@ -22,15 +23,18 @@ def start():
 
     content = Content()
 
-    robot_input(content)
+    # robot_input(content)
 
     # Starts the text robot passing the content object to it
-    robot_text()
+    # robot_text()
+
+    # Starts the image search robot
+    robot_image()
 
     # Gets the JSON content in order to show the file's content
-    content_json = load()
-    print("Loading JSON file....")
-    print(content_json)
+    # content_json = load()
+    # print("Loading JSON file....")
+    # print(content_json)
 
 # Initialize the robots orchestrator
 start()
