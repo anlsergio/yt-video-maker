@@ -29,3 +29,11 @@ File: `.env`
 ```
 SEARCH_ENGINE_ID=my_api_key
 ```
+
+## Static Files Directory
+
+Directory: `./src/static/`
+
+```
+This is the directory where the robot should place all static files (e.g. *.png)
+```
