@@ -23,10 +23,10 @@ def start():
 
     content = Content()
 
-    # robot_input(content)
+    robot_input(content)
 
     # Starts the text robot passing the content object to it
-    # robot_text()
+    robot_text()
 
     # Starts the image search robot
     robot_image()

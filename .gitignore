@@ -110,3 +110,6 @@ venv.bak/
 
 # Json State File
 content.json
+
+# Static content
+*.png
