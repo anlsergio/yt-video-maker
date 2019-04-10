@@ -27,7 +27,8 @@ WATSON_API_KEY=my_api_key
 File: `.env`
 
 ```
-SEARCH_ENGINE_ID=my_api_key
+SEARCH_ENGINE_ID=my_id
+GOOGLE_SEARCH_API_KEY=my_api_key
 ```
 
 ## Static Files Directory
