@@ -6,7 +6,6 @@ cachetools==3.1.0
 certifi==2019.3.9
 chardet==3.0.4
 cymem==2.0.2
-en-core-web-sm==2.1.0
 enum34==1.1.6
 google-api-python-client==1.7.8
 google-auth==1.6.3
@@ -34,9 +33,11 @@ rsa==4.0
 singledispatch==3.4.0.3
 six==1.12.0
 srsly==0.0.5
+style==1.1.0
 thinc==7.0.4
 tqdm==4.31.1
 typed-ast==1.3.1
+update==0.0.1
 uritemplate==3.0.0
 urllib3==1.24.1
 wasabi==0.2.0
