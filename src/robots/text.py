@@ -11,7 +11,7 @@ from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 import Features, KeywordsOptions
 
 # Uncomment the line below to download 'en' package for nltk:
-# nltk.download()
+# nltk.download('punkt')
 
 def fetch_content_from_wikipedia(content):
     # This function uses algorithmia API to fetch data from Wikipedia source based on search term and
@@ -19,8 +19,10 @@ def fetch_content_from_wikipedia(content):
 
     algorithmia_authenticated = Algorithmia.client(settings.ALGORITHMIA_API_KEY)
     wikipedia_algorithm = algorithmia_authenticated.algo('web/WikipediaParser/0.1.2')
+
+    print("> Fetching content from Wikipedia...")
+
     try:
-        print('trying....')
         wikipedia_content = wikipedia_algorithm.pipe(content.search_term).result
         content.source_content_original = wikipedia_content['content']
 
@@ -39,6 +41,9 @@ def clear_content(content):
 
         Remove any blank lines and ugly Wikipedia markdowns from a given text.
     """
+
+    print("> Cleaning content from Wikipedia...")
+
     def remove_blank_lines_and_markdown(text):
         all_lines = text.split('\n')
         without_blank_lines_and_markdown = []
@@ -57,6 +62,9 @@ def clear_content(content):
 def break_content_in_sentences(content):
     # This function uses nltk IA library to recognize and break text in separated sentences (Sentence Boundary Detection)
     # Also it initializes the data structure of content.sentences atribute
+
+    print("> Breaking text into sentences by using IA...")
+
     sent_tokenize_list = sent_tokenize(content.source_content_clean)
     for sentence in sent_tokenize_list:
         content.sentences.append({'text': sentence, 'keywords': [], 'images': [], 'google_search_query': [], 'downloaded_images': []})
@@ -66,6 +74,7 @@ def fetch_watson_and_return_keywords(sentence):
 
         Provides IBM Watson a sentece and returns a list of tags
     """
+
     NLU = NaturalLanguageUnderstandingV1(
         version='2018-11-16',
         iam_apikey=settings.WATSON_API_KEY,
@@ -97,12 +106,14 @@ def limit_max_sentences(content):
 
 
 def fetch_sentences_keywords(content):
+    print("> IBM Watson IA is applying tags for each sentence...")
+
     for sentence in content.sentences:
         sentence['keywords'] = fetch_watson_and_return_keywords(sentence.get('text'))
 
 def robot():
     """ Text Robot
-        These function gives live to the text robot
+        This function gives life to the text robot
     """ 
     print("Pre loading data from JSON...")
 

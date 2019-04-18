@@ -31,6 +31,8 @@ SEARCH_ENGINE_ID=my_id
 GOOGLE_SEARCH_API_KEY=my_api_key
 ```
 
+# Structure
+
 ## Static Files Directory
 
 Directory: `./src/static/`
@@ -38,3 +40,13 @@ Directory: `./src/static/`
 ```
 This is the directory where the robot should place all static files (e.g. *.png)
 ```
+
+# O.S. Dependencies
+
+## Fonts
+
+You need to install the following font on your O.S. in order to correct run the image processing feature:
+
+```
+arial (True Type Font)
+``` 
