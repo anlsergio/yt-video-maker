@@ -141,42 +141,47 @@ def robot():
                 # Template for positioning text on image using 2 different positions for every index iteration
                 template = {
                     '0': {
-                        'position': [100, 50]
+                        'position': (100, 50)
                     },
                     '1': {
-                        'position': [100, img_h - 350]
+                        'position': (100, img_h - 350)
                     },
                     '2': {
-                        'position': [100, 50]
+                        'position': (100, 50)
                     },
                     '3': {
-                        'position': [100, img_h - 350]
+                        'position': (100, img_h - 350)
                     },
                     '4': {
-                        'position': [100, 50]
+                        'position': (100, 50)
                     },
                     '5': {
-                        'position': [100, img_h - 350]
+                        'position': (100, img_h - 350)
                     },
                     '6': {
-                        'position': [100, 50]
+                        'position': (100, 50)
                     },
                     '7': {
-                        'position': [100, img_h - 350]
+                        'position': (100, img_h - 350)
                     }
                 }
 
                 draw = ImageDraw.Draw(img)
                 font = ImageFont.truetype("arial.ttf", 48)
                 position = template[str(sentence_index)]['position']
+                width_pos, height_pos = position
 
                 for line in text_lines:
+                    font_width, font_height = font.getsize(line)
                     # For every line of the sentence add the corresponding font size height value to the 
                     # Height position of the text, so it doesn't overlap on the past added line
-                    font_width, font_height = font.getsize(line)
-                    position[1] += font_height
                     # Draws text into the image (position tuple, text, color and font)
-                    draw.text(tuple(position), line, (255,255,255), font=font)
+                    draw.text((width_pos+2, height_pos+2), line, (0,0,0), font=font)
+                    draw.text((width_pos-2, height_pos-2), line, (0,0,0), font=font)
+                    draw.text((width_pos+2, height_pos-2), line, (0,0,0), font=font)
+                    draw.text((width_pos-2, height_pos+2), line, (0,0,0), font=font)
+                    draw.text((width_pos, height_pos), line, (255,255,255), font=font)
+                    height_pos += font_height
                 img.save(output_image_path)
             except AttributeError:
                 print(f"Couldn't add text to image { sentence_index }_converted.png")
