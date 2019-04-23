@@ -4,6 +4,7 @@ from robots.state import load
 from robots.text import robot as robot_text
 from robots.input import robot as robot_input
 from robots.image import robot as robot_image
+from robots.video import robot as robot_video
 
 class Content:
     def __init__(self):
@@ -30,6 +31,9 @@ def start():
 
     # Starts the image search robot
     robot_image()
+
+    # Starts the video processing robot
+    robot_video()
 
     # Gets the JSON content in order to show the file's content
     # content_json = load()
