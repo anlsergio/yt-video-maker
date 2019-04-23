@@ -75,7 +75,6 @@ def robot():
             sentence_index += 1
         content.downloaded_images = downloaded_images
 
-
     fetch_images_of_all_sentences(content)
     download_all_images(content)
     save(content.__dict__)
