@@ -1,7 +1,6 @@
 # yt-video-maker 
 
-**IMPORTANT:** This project is currently put on-hold because I'm focusing my time on other things at the moment but I'll surely get back to finish it as soon as I can. In the meanwhile, feel free to send me your suggestions in form of a issue and even a PR, so I can review it.
-
+>**IMPORTANT:** This project is currently put on-hold because I'm focusing my time on other things at the moment but I'll surely get back to finish it as soon as I can. In the meanwhile, feel free to send me your suggestions in the form of an issue and even a PR, so I can review it.
 Thanks so much for the patience!
 
 <br />
